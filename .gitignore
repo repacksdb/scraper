@@ -1,0 +1,26 @@
+# Python-specific
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+*.pyc
+*.pyo
+
+# IDE-specific
+.idea/
+.vscode/
+
+# Dependency management
+# If you're using pipenv
+Pipfile.lock
+
+# If you're using Poetry
+poetry.lock
+
+# Logs
+*.log
+
+# Environment variables
+.env

@@ -1,0 +1,9 @@
+requests
+beautifulsoup4
+urllib3<2
+cfscrape
+html2text
+markdown
+colorama
+python-dotenv
+pymongo
