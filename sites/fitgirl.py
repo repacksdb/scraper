@@ -29,24 +29,28 @@ def scrape_all_links(SITE_URL, LAST_PAGE, POSTS_LINKS):
     print(Fore.GREEN + '[+] Preparing to scrape Fitgirl...')
     
     for page in range(1, int(LAST_PAGE) + 1):
-        print(Fore.GREEN + '[+] Generating page URL...')
-        page_url = SITE_URL + '?lcp_page0=' + str(page) + '#lcp_instance_0'
-        print(Fore.GREEN + '[+] Scraping ' + page_url + '...')
-        scraper = cfscrape.create_scraper()
-        response = scraper.get(page_url)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        posts = soup.find('ul', {'class': 'lcp_catlist'}).find_all('a')
-        for post in posts:
-            post_link = post['href']
-            print(Fore.GREEN + '[+] Found post link: ' + post_link)
-            if post_link not in POSTS_LINKS:
-                print(Fore.YELLOW + '[+] Adding post link to list...')
-                POSTS_LINKS.append(post_link)
-                print(Fore.GREEN + '[+] Added post link to list.')
-            else:
-                print(Fore.RED + '[-] Post link already exists in list skipping...')
-        print(Fore.GREEN + '[+] Scraped ' + str(len(posts)) + ' links from ' + page_url + '.')
-        sleep(3)
+        try:
+            print(Fore.GREEN + '[+] Generating page URL...')
+            page_url = SITE_URL + '?lcp_page0=' + str(page) + '#lcp_instance_0'
+            print(Fore.GREEN + '[+] Scraping ' + page_url + '...')
+            scraper = cfscrape.create_scraper()
+            response = scraper.get(page_url)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            posts = soup.find('ul', {'class': 'lcp_catlist'}).find_all('a')
+            for post in posts:
+                post_link = post['href']
+                print(Fore.GREEN + '[+] Found post link: ' + post_link)
+                if post_link not in POSTS_LINKS:
+                    print(Fore.YELLOW + '[+] Adding post link to list...')
+                    POSTS_LINKS.append(post_link)
+                    print(Fore.GREEN + '[+] Added post link to list.')
+                else:
+                    print(Fore.RED + '[-] Post link already exists in list skipping...')
+            print(Fore.GREEN + '[+] Scraped ' + str(len(posts)) + ' links from ' + page_url + '.')
+            sleep(3)
+        except:
+            print(Fore.RED + '[-] Failed to scrape ' + page_url + '.')
+            pass
     return POSTS_LINKS
 
 def load_posts_links():
